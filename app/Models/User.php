@@ -24,6 +24,7 @@ class User extends Authenticatable
         'PESEL',
         'NIP',
         'email',
+        'role',
         'password',
     ];
 

@@ -26,6 +26,11 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
+        Schema::table('groups', function (Blueprint $table) {
+            $table->unsignedBigInteger('users_id')->nullable();
+            $table->foreign('users_id')->references('id')->on('users');
+            
+        });
     }
 
     /**
@@ -35,6 +40,11 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
+        Schema::create('groups', function (Blueprint $table) {
+            $table->dropForeign('groups_users_id_foreign');
+            $table->dropColumn('users_id');
+        });
+
         Schema::dropIfExists('users');
     }
 }

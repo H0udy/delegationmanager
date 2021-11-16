@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\enums\UserRole;
 
 class RegisterController extends Controller
 {
@@ -51,6 +52,11 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
+            'surname' => ['required', 'string', 'max:255'],
+            'role' => ['required'],
+            'company' => ['required', 'string', 'max:255'],
+            'PESEL' => ['required', 'string', 'max:11', 'min:11'],
+            'NIP' => ['required', 'string', 'max:10', 'min:10'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
@@ -67,6 +73,7 @@ class RegisterController extends Controller
         return User::create([
             'name' => $data['name'],
             'surname' => $data['surname'],
+            'role' => $data['role'],
             'company' => $data['company'],
             'PESEL' => $data['PESEL'],
             'NIP' => $data['NIP'],
